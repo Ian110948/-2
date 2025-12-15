@@ -38,3 +38,38 @@ void sub_matrices(Matrix A, Matrix B, Matrix Result) {
 
     return 0;
 }
+// 實作：轉置矩陣 (A -> Result)
+// A^T = [a_ji]
+void transpose_matrix(Matrix A, Matrix Result) {
+    int i, j;
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            Result[i][j] = A[j][i]; // 核心邏輯：交換 i 和 j 索引
+        }
+    }
+}
+// 實作：矩陣乘法 (A * B)
+// Result[i][j] = Sum(A[i][k] * B[k][j]) for k=0 to SIZE-1
+void multiply_matrices(Matrix A, Matrix B, Matrix Result) {
+    int i, j, k;
+    double sum;
+    for (i = 0; i < SIZE; i++) { // 遍歷 Result 的行
+        for (j = 0; j < SIZE; j++) { // 遍歷 Result 的列
+            sum = 0.0;
+            for (k = 0; k < SIZE; k++) { // 計算點積
+                sum += A[i][k] * B[k][j];
+            }
+            Result[i][j] = sum;
+        }
+    }
+}
+// 實作：元素級乘法 (A ∘ B)
+// Result[i][j] = A[i][j] * B[i][j]
+void elementwise_multiply(Matrix A, Matrix B, Matrix Result) {
+    int i, j;
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            Result[i][j] = A[i][j] * B[i][j];
+        }
+    }
+}
