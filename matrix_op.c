@@ -73,3 +73,71 @@ void elementwise_multiply(Matrix A, Matrix B, Matrix Result) {
         }
     }
 }
+double determinant_2x2(double a, double b, double c, double d) {
+    return (a * d) - (b * c);
+}
+double determinant_3x3(Matrix A) {
+    // 使用第一行展開
+    double det = A[0][0] * (A[1][1] * A[2][2] - A[1][2] * A[2][1]) 
+               - A[0][1] * (A[1][0] * A[2][2] - A[1][2] * A[2][0])
+               + A[0][2] * (A[1][0] * A[2][1] - A[1][1] * A[2][0]);
+    return det;
+}
+void adjoint_matrix(Matrix A, Matrix Adjoint) {
+    Matrix TempCofactor; // 暫存餘子矩陣
+    int i, j, k_row, k_col;
+    int sign = 1;
+
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            Matrix Submatrix; // 用於存放 2x2 子矩陣
+
+            // 建立 Submatrix (移除第 i 行和第 j 列)
+            int sub_i = 0;
+            for (k_row = 0; k_row < SIZE; k_row++) {
+                if (k_row == i) continue;
+                int sub_j = 0;
+                for (k_col = 0; k_col < SIZE; k_col++) {
+                    if (k_col == j) continue;
+                    Submatrix[sub_i][sub_j] = A[k_row][k_col];
+                    sub_j++;
+                }
+                sub_i++;
+            }
+
+            // 計算餘子式 (Cofactor = (-1)^(i+j) * det(Submatrix))
+            sign = ((i + j) % 2 == 0) ? 1 : -1;
+            TempCofactor[i][j] = sign * determinant_2x2(Submatrix[0][0], Submatrix[0][1], 
+                                                      Submatrix[1][0], Submatrix[1][1]);
+        }
+    }
+
+    // 伴隨矩陣 = 餘子矩陣的轉置
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            Adjoint[i][j] = TempCofactor[j][i];
+        }
+    }
+}
+int inverse_matrix(Matrix A, Matrix Inverse) {
+    double det = determinant_3x3(A);
+
+    // 檢查是否可逆 (行列式不為零)
+    if (det == 0) {
+        printf("Error: Matrix is singular. Inverse does not exist.\n");
+        return 0; // 不可逆
+    }
+
+    Matrix Adjoint;
+    adjoint_matrix(A, Adjoint); // 計算伴隨矩陣
+
+    // 逆矩陣 = (1 / Det(A)) * Adjoint(A)
+    double det_inv = 1.0 / det;
+    int i, j;
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            Inverse[i][j] = Adjoint[i][j] * det_inv;
+        }
+    }
+    return 1; // 可逆
+}
