@@ -21,6 +21,20 @@ void print_matrix(Matrix M) {
         printf("\n");
     }
 }
+// 實作：矩陣減法 (A - B)
+void sub_matrices(Matrix A, Matrix B, Matrix Result) {
+    int i, j;
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            Result[i][j] = A[i][j] - B[i][j];
+        }
+    }
+}
+// 測試矩陣減法
+    sub_matrices(A, B, Result);
 
-// 之後您會在下方實作減法、乘法、轉置等所有函數
-// ...
+    printf("\n--- A - B 的結果 ---\n");
+    print_matrix(Result); 
+
+    return 0;
+}
