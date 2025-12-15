@@ -16,6 +16,11 @@ void add_matrices(Matrix A, Matrix B, Matrix Result);
 [cite_start]// 3. 基礎運算：減法 [cite: 13]
 void sub_matrices(Matrix A, Matrix B, Matrix Result);
 
-// (之後會新增乘法、轉置、行列式等所有函數宣告)
+// 4. 線性運算：矩陣乘法
+void multiply_matrices(Matrix A, Matrix B, Matrix Result);
 
-#endif
+// 5. 線性運算：轉置
+void transpose_matrix(Matrix A, Matrix Result);
+
+// 6. 線性運算：元素級乘法
+void elementwise_multiply(Matrix A, Matrix B, Matrix Result);
