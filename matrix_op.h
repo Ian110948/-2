@@ -24,3 +24,17 @@ void transpose_matrix(Matrix A, Matrix Result);
 
 // 6. 線性運算：元素級乘法
 void elementwise_multiply(Matrix A, Matrix B, Matrix Result);
+// 7. 進階運算：計算 2x2 矩陣行列式 (輔助函數)
+double determinant_2x2(double a, double b, double c, double d);
+
+// 8. 進階運算：計算 3x3 矩陣行列式
+double determinant_3x3(Matrix A);
+
+// 9. 進階運算：計算餘子矩陣 (Cofactor Matrix)
+void cofactor_matrix(Matrix A, Matrix Cofactor);
+
+// 10. 進階運算：計算伴隨矩陣 (Adjoint Matrix)
+void adjoint_matrix(Matrix A, Matrix Adjoint);
+
+// 11. 進階運算：計算逆矩陣 (Inverse Matrix)
+int inverse_matrix(Matrix A, Matrix Inverse); // 回傳值 int 用於表示是否可逆 (0=不可逆, 1=可逆)
