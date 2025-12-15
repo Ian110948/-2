@@ -1,7 +1,7 @@
-#include "matrix_op.h" // 包含我們剛才定義的標頭檔
+#include "matrix_op.h" 
 #include <stdio.h>
 
-[cite_start]// 範例實作：矩陣加法 [cite: 7]
+[cite_start]
 void add_matrices(Matrix A, Matrix B, Matrix Result) {
     int i, j;
     for (i = 0; i < SIZE; i++) {
@@ -11,7 +11,7 @@ void add_matrices(Matrix A, Matrix B, Matrix Result) {
     }
 }
 
-// 範例實作：顯示矩陣
+
 void print_matrix(Matrix M) {
     int i, j;
     for (i = 0; i < SIZE; i++) {
@@ -21,7 +21,7 @@ void print_matrix(Matrix M) {
         printf("\n");
     }
 }
-// 實作：矩陣減法 (A - B)
+
 void sub_matrices(Matrix A, Matrix B, Matrix Result) {
     int i, j;
     for (i = 0; i < SIZE; i++) {
@@ -30,7 +30,7 @@ void sub_matrices(Matrix A, Matrix B, Matrix Result) {
         }
     }
 }
-// 測試矩陣減法
+
     sub_matrices(A, B, Result);
 
     printf("\n--- A - B 的結果 ---\n");
@@ -38,7 +38,7 @@ void sub_matrices(Matrix A, Matrix B, Matrix Result) {
 
     return 0;
 }
-// 實作：轉置矩陣 (A -> Result)
+
 // A^T = [a_ji]
 void transpose_matrix(Matrix A, Matrix Result) {
     int i, j;
@@ -48,7 +48,7 @@ void transpose_matrix(Matrix A, Matrix Result) {
         }
     }
 }
-// 實作：矩陣乘法 (A * B)
+
 // Result[i][j] = Sum(A[i][k] * B[k][j]) for k=0 to SIZE-1
 void multiply_matrices(Matrix A, Matrix B, Matrix Result) {
     int i, j, k;
@@ -63,7 +63,7 @@ void multiply_matrices(Matrix A, Matrix B, Matrix Result) {
         }
     }
 }
-// 實作：元素級乘法 (A ∘ B)
+
 // Result[i][j] = A[i][j] * B[i][j]
 void elementwise_multiply(Matrix A, Matrix B, Matrix Result) {
     int i, j;
@@ -77,7 +77,7 @@ double determinant_2x2(double a, double b, double c, double d) {
     return (a * d) - (b * c);
 }
 double determinant_3x3(Matrix A) {
-    // 使用第一行展開
+   
     double det = A[0][0] * (A[1][1] * A[2][2] - A[1][2] * A[2][1]) 
                - A[0][1] * (A[1][0] * A[2][2] - A[1][2] * A[2][0])
                + A[0][2] * (A[1][0] * A[2][1] - A[1][1] * A[2][0]);
@@ -90,9 +90,9 @@ void adjoint_matrix(Matrix A, Matrix Adjoint) {
 
     for (i = 0; i < SIZE; i++) {
         for (j = 0; j < SIZE; j++) {
-            Matrix Submatrix; // 用於存放 2x2 子矩陣
+            Matrix Submatrix; 
 
-            // 建立 Submatrix (移除第 i 行和第 j 列)
+            
             int sub_i = 0;
             for (k_row = 0; k_row < SIZE; k_row++) {
                 if (k_row == i) continue;
@@ -105,14 +105,14 @@ void adjoint_matrix(Matrix A, Matrix Adjoint) {
                 sub_i++;
             }
 
-            // 計算餘子式 (Cofactor = (-1)^(i+j) * det(Submatrix))
+            
             sign = ((i + j) % 2 == 0) ? 1 : -1;
             TempCofactor[i][j] = sign * determinant_2x2(Submatrix[0][0], Submatrix[0][1], 
                                                       Submatrix[1][0], Submatrix[1][1]);
         }
     }
 
-    // 伴隨矩陣 = 餘子矩陣的轉置
+    
     for (i = 0; i < SIZE; i++) {
         for (j = 0; j < SIZE; j++) {
             Adjoint[i][j] = TempCofactor[j][i];
@@ -122,16 +122,16 @@ void adjoint_matrix(Matrix A, Matrix Adjoint) {
 int inverse_matrix(Matrix A, Matrix Inverse) {
     double det = determinant_3x3(A);
 
-    // 檢查是否可逆 (行列式不為零)
+    
     if (det == 0) {
         printf("Error: Matrix is singular. Inverse does not exist.\n");
         return 0; // 不可逆
     }
 
     Matrix Adjoint;
-    adjoint_matrix(A, Adjoint); // 計算伴隨矩陣
+    adjoint_matrix(A, Adjoint); 
 
-    // 逆矩陣 = (1 / Det(A)) * Adjoint(A)
+    
     double det_inv = 1.0 / det;
     int i, j;
     for (i = 0; i < SIZE; i++) {
